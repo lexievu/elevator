@@ -4,6 +4,25 @@ using System.Collections.Generic;
 
 namespace ElevatorNS
 {
+    // public class Program
+    // {
+    //     public static void Main(string[] args)
+    //     {
+    //         Elevator elevator = new Elevator(5); 
+
+    //         elevator.Direction = Elevator.ElevatorDirection.UP;
+    //         elevator.currentQueue.Add(4);
+    //         elevator.currentQueue.Add(6);
+    //         elevator.currentQueue.Add(10);
+    //         elevator.oppositeQueue.Add(1);
+
+    //         // Act
+    //         elevator.addFloorToQueue(7);
+
+    //         Console.WriteLine(String.Join("; ", elevator.currentQueue));
+    //         Console.WriteLine(String.Join("; ", elevator.oppositeQueue));
+    //     }
+    // }
 
     public class Elevator
     {

@@ -71,7 +71,7 @@ namespace ElevatorTests
             int[] expectedOppositeQueue = { 1 };
 
             // Assert
-            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue, String.Join("; ", elevator.currentQueue));
             CollectionAssert.AreEquivalent(expectedOppositeQueue, elevator.oppositeQueue);
         }
 
@@ -94,7 +94,7 @@ namespace ElevatorTests
             int[] expectedOppositeQueue = { 7, 8, 9 };
 
             // Assert
-            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue, String.Join("; ", elevator.currentQueue));
             CollectionAssert.AreEquivalent(expectedOppositeQueue, elevator.oppositeQueue);
         }
 
