@@ -11,52 +11,7 @@ namespace ElevatorNS
 
         }
     }
-    // public class Program {
-    //     public static void Main() {
-    //         var path = @"/Users/thienhuongvu/elevator/data.csv"; // Person ID,At Floor,Going to Floor,Time
-    //         using (TextFieldParser csvParser = new TextFieldParser(path))
-    //         {
-    //             csvParser.CommentTokens = new string[] { "#" };
-    //             csvParser.SetDelimiters(new string[] { "," });
-    //             csvParser.HasFieldsEnclosedInQuotes = true;
-
-    //             // Skip the row with the column names
-    //             csvParser.ReadLine();
-
-    //             while (!csvParser.EndOfData) 
-    //             {
-    //                 // Read current line fields, pointer moves to the next line.
-    //                 string[] fields = csvParser.ReadFields(); // Person ID,At Floor,Going to Floor,Time
-    //                 int personID = Int32.Parse(fields[0]);
-    //                 int atFloor = Int32.Parse(fields[1]); 
-    //                 int goingToFloor = Int32.Parse(fields[2]); 
-    //                 int time = Int32.Parse(fields[3]); 
-    //                 Console.WriteLine(personID.ToString() + " " + atFloor.ToString()+ " " + goingToFloor.ToString()+ " " + time.ToString());
-    //             }
-    //         }
-    //     }
-    // }
-
-    // public class Program
-    // {
-    //     public static void Main(string[] args)
-    //     {
-    //         Elevator elevator = new Elevator(5); 
-
-    //         elevator.Direction = Elevator.ElevatorDirection.UP;
-    //         elevator.currentQueue.Add(4);
-    //         elevator.currentQueue.Add(6);
-    //         elevator.currentQueue.Add(10);
-    //         elevator.oppositeQueue.Add(1);
-
-    //         // Act
-    //         elevator.addFloorToQueue(7);
-
-    //         Console.WriteLine(String.Join("; ", elevator.currentQueue));
-    //         Console.WriteLine(String.Join("; ", elevator.oppositeQueue));
-    //     }
-    // }
-
+    
     public class Elevator
     {
         private int currentTime = 0;
