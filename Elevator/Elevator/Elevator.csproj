@@ -4,9 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   
-  <PropertyGroup>
+  <!-- <PropertyGroup>
     <OutputType>Exe</OutputType>
-  </PropertyGroup>
+  </PropertyGroup> -->
 
 
 </Project>

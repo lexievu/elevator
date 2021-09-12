@@ -4,13 +4,6 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace ElevatorNS
 {
-    public class Program
-    {
-        public static void Main()
-        {
-
-        }
-    }
     
     public class Elevator
     {

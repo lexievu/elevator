@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassengerTests", "Passenger
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVFileTests", "CSVFileTests\CSVFileTests.csproj", "{BCD3DC61-9A40-4478-BCA7-DE865C8BC4C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulation", "Simulation\Simulation.csproj", "{9EFD014C-1CCE-4C75-A7FD-0FD51E047078}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{BCD3DC61-9A40-4478-BCA7-DE865C8BC4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCD3DC61-9A40-4478-BCA7-DE865C8BC4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCD3DC61-9A40-4478-BCA7-DE865C8BC4C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EFD014C-1CCE-4C75-A7FD-0FD51E047078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EFD014C-1CCE-4C75-A7FD-0FD51E047078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EFD014C-1CCE-4C75-A7FD-0FD51E047078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EFD014C-1CCE-4C75-A7FD-0FD51E047078}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
