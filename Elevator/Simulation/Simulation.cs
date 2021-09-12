@@ -1,9 +1,66 @@
 ﻿using System;
+using PassengerNS; 
+using CSVFileNS;
+using ElevatorNS;
+using System.Collections.Generic;
 
 namespace SimulationNS
 {
     public class Simulation
     {
-        private int timeToTravelOneFloor = 10; 
+        public readonly List<Passenger> allPassengers = new List<Passenger>();
+        public List<Passenger> remainingPassengers = new List<Passenger>();
+        public List<Passenger> waitingPassengers = new List<Passenger>(); 
+        private int time = 0; 
+        public Elevator elevator; 
+
+        public Simulation() 
+        {
+            allPassengers = CSVFile.readPassengersCSV();
+            remainingPassengers = new List<Passenger>(allPassengers);
+            elevator = new Elevator();
+        }
+
+        public void pickUpPassenger(Passenger passenger) 
+        {
+            if (Math.Abs(passenger.goingToFloor - elevator.currentFloor) > 0.0001)
+                {
+                    // Pick up the passengers that are not being picked up and dropped off at the same floor (e.g. passenger changed their mind)
+
+                    elevator.peopleInLift.Add(passenger); 
+                    elevator.addFloorToQueue(passenger.goingToFloor);
+                }
+        }
+
+        public void dropOffPassengers() 
+        {
+            foreach (var passenger in elevator.peopleInLift) 
+            {
+                if (Math.Abs(passenger.goingToFloor - elevator.currentFloor) < 0.0001) 
+                {
+                    elevator.peopleInLift.Remove(passenger); 
+                }
+            }
+        }
+
+        public void increment(int timeStep = 1) 
+        {
+            time += timeStep; 
+
+            while (remainingPassengers[0].startWaitingAt > time) 
+            {
+                elevator.addFloorToQueue(remainingPassengers[0].atFloor); // Note: the elevator is not aware of the passenger's goingToFloor until the passenger has entered the elevator
+                if (Math.Abs(remainingPassengers[0].atFloor - elevator.currentFloor) > 0.0001)
+                {
+                    waitingPassengers.Add(remainingPassengers[0]); 
+                } 
+                else 
+                {
+                    elevator.peopleInLift.Add(remainingPassengers[0]);
+                }
+                
+                remainingPassengers.RemoveAt(0); 
+            }
+        }
     }
 }
