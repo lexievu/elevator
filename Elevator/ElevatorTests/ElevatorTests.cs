@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ElevatorNS;
 using System;
+using System.Collections.Generic;
 
 namespace ElevatorTests
 {
@@ -199,6 +200,55 @@ namespace ElevatorTests
             CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
             CollectionAssert.AreEquivalent(expectedOppositeQueue, elevator.oppositeQueue);
             Assert.AreEqual(Elevator.ElevatorDirection.STATIONARY, elevator.Direction);
+        }
+
+        [TestMethod] 
+        public void changeDirection_bothListEmpty() 
+        {
+            List<int> emptyList = new List<int>();
+            Elevator elevator = new Elevator (3); 
+            elevator.currentQueue = new List<int>(); 
+            elevator.oppositeQueue = new List<int>(); 
+            elevator.Direction = Elevator.ElevatorDirection.UP; 
+            elevator.changeDirection(); 
+
+            Assert.AreEqual(Elevator.ElevatorDirection.STATIONARY, elevator.Direction); 
+            CollectionAssert.AreEquivalent(emptyList, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(emptyList, elevator.oppositeQueue);
+        }
+
+        [TestMethod]
+        public void changeDirection_upToDown() 
+        {
+            Elevator elevator = new Elevator(3); 
+            elevator.currentQueue = new List<int>(); 
+            elevator.oppositeQueue = new List<int>() {7, 3, 1};
+            elevator.Direction = Elevator.ElevatorDirection.UP; 
+            elevator.changeDirection(); 
+
+            List<int> newCurrentQueue = new List<int>() {7, 3, 1};
+            List<int> newOppositeQueue = new List<int>();  
+            
+            Assert.AreEqual(Elevator.ElevatorDirection.DOWN, elevator.Direction); 
+            CollectionAssert.AreEquivalent(newCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(newOppositeQueue, elevator.oppositeQueue);
+        }
+
+        [TestMethod]
+        public void changeDirection_downToUp() 
+        {
+            Elevator elevator = new Elevator(3); 
+            elevator.currentQueue = new List<int>(); 
+            elevator.oppositeQueue = new List<int>() {4,7,9};
+            elevator.Direction = Elevator.ElevatorDirection.DOWN; 
+            elevator.changeDirection(); 
+
+            List<int> newCurrentQueue = new List<int>() {4,7,9};
+            List<int> newOppositeQueue = new List<int>();  
+            
+            Assert.AreEqual(Elevator.ElevatorDirection.UP, elevator.Direction); 
+            CollectionAssert.AreEquivalent(newCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(newOppositeQueue, elevator.oppositeQueue);
         }
     }
 }

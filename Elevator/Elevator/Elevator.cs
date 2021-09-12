@@ -121,6 +121,34 @@ namespace ElevatorNS
             }
         }
 
+        public void changeDirection() 
+        {
+            // Thow an exception if the current queue is not empty 
+            if (this.currentQueue.Count > 0) 
+            {
+                throw new InvalidOperationException("The elevator should not change direction while there are floors in the current queue."); 
+            }
+            else 
+            {
+                if (this.oppositeQueue.Count == 0) 
+                {
+                    this.Direction = ElevatorDirection.STATIONARY;
+                }
+                else if (this.oppositeQueue.Count > 0)
+                {
+                    currentQueue = new List<int>(oppositeQueue); 
+                    oppositeQueue = new List<int>(); 
+                    if (this.Direction == ElevatorDirection.UP) 
+                    {
+                        this.Direction = ElevatorDirection.DOWN;
+                    }
+                    else {
+                        this.Direction = ElevatorDirection.UP;
+                    }
+                }
+            }
+        }
+
         void pickUp (int passenger) { }
 
         public enum ElevatorDirection
