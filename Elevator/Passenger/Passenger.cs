@@ -5,9 +5,9 @@ namespace PassengerNS
     public class Passenger
     {
         public readonly int id;
-        public int atFloor;
-        public int goingToFloor;
-        public int startWaitingAt;
+        public readonly int atFloor;
+        public readonly int goingToFloor;
+        public readonly int startWaitingAt;
 
         public Passenger (int personID, int atFloor, int goingToFloor, int time)
         {

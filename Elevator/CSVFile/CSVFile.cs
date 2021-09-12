@@ -2,6 +2,7 @@
 using System;
 using PassengerNS;
 using System.Collections.Generic;
+using System.IO;
 
 namespace CSVFileNS
 {
@@ -34,6 +35,21 @@ namespace CSVFileNS
             }
 
             return passengers;
+        }
+
+        public static string WriteResults(int currentTime, List<int> peopleInLift, int currentFloor, List<int> floorQueue, string filePath = "/Users/thienhuongvu/Projects/elevator/Elevator/output.csv") 
+        {
+            if (!File.Exists(filePath)) {
+                // Create a file to write to
+                using (StreamWriter sw = File.CreateText(filePath))
+                {
+                    sw.WriteLine("Current Time,People In Lift,Current Floor,Floor Queue"); 
+                }
+            }
+            string textOutput = currentTime.ToString() + "," + String.Join(";", peopleInLift) + "," + currentFloor.ToString() + "," + String.Join(";", floorQueue); 
+            File.AppendAllText(filePath, textOutput);
+
+            return filePath;
         }
     }
 }
