@@ -85,14 +85,14 @@ namespace ElevatorTests
             elevator.currentQueue.Add(4);
             elevator.currentQueue.Add(2);
 
-            elevator.oppositeQueue.Add(8);
+            elevator.oppositeQueue.Add(6);
             elevator.oppositeQueue.Add(9);
 
             // Act
             elevator.addFloorToQueue(7);
 
             int[] expectedCurrentQueue = { 4, 2 };
-            int[] expectedOppositeQueue = { 7, 8, 9 };
+            int[] expectedOppositeQueue = { 6, 7, 9 };
 
             // Assert
             CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue, String.Join("; ", elevator.currentQueue));

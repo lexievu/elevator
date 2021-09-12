@@ -4,24 +4,23 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace ElevatorNS
 {
-    
+
     public class Elevator
     {
-        private int currentTime = 0;
+        // private int currentTime = 0;
         public List<int> peopleInLift = new List<int>();
-        private int currentFloor = 1;
+        public double currentFloor = 1.0;
         public List<int> currentQueue = new List<int>();
         public List<int> oppositeQueue = new List<int>();
         public ElevatorDirection Direction = ElevatorDirection.STATIONARY;
         private int topFloor;
+        private double timeToTravelOneFloor = 10; 
 
-        public Elevator (int currentFloor = 1, int numberOfFloors = 10)
+        public Elevator (double currentFloor = 1.0, int numberOfFloors = 10)
         {
             this.currentFloor = currentFloor; 
             topFloor = numberOfFloors; 
         }
-
-        void addRow () { }
 
         public void addFloorToQueue (int floor) {
             // Only do something if the given floor is not the current floor
@@ -97,7 +96,32 @@ namespace ElevatorNS
             }
         }
 
-        void pickUp (int passenger) { }
+        public void increment (double timeStep = 1) 
+        {
+            if (Direction != ElevatorDirection.STATIONARY) 
+            {
+                if (Direction == ElevatorDirection.UP) 
+                {
+                    this.currentFloor += timeStep / timeToTravelOneFloor; 
+                }
+                else if (Direction == ElevatorDirection.DOWN)
+                {
+                    this.currentFloor -= timeStep / timeToTravelOneFloor;
+                }
+
+                // Remove floor from queue when the elevator gets to the floor 
+                if (Math.Abs(currentFloor - currentQueue[0]) < 0.0001) 
+                { 
+                    this.currentQueue.RemoveAt(0); 
+                }
+
+                // If current queue is empty, change the elevator direction
+                if (this.currentQueue.Count == 0) 
+                {
+                    this.changeDirection();
+                }
+            }
+        }
 
         public enum ElevatorDirection
         {
