@@ -20,7 +20,7 @@ namespace CSVFileTests
         }
 
         [TestMethod]
-        public void WriteCSV() 
+        public void WriteToNewCSV() 
         {
             List<int> peopleInLift = new List<int>();
             peopleInLift.Add(4);
@@ -36,6 +36,18 @@ namespace CSVFileTests
             floorQueue.Add(45);
 
             string filePath = CSVFile.WriteResults(1, peopleInLift, 4, floorQueue); 
+
+            Assert.AreEqual("/Users/thienhuongvu/Projects/elevator/Elevator/output.csv", filePath);
+        }
+
+        [TestMethod]
+        public void WriteToSameCSV()
+        {
+            List<int> peopleInLift = new List<int>(){1,34,2};
+
+            List<int> floorQueue = new List<int>(){12,4,5,3,2,4}; 
+
+            string filePath = CSVFile.WriteResults(2, peopleInLift, 7, floorQueue);
 
             Assert.AreEqual("/Users/thienhuongvu/Projects/elevator/Elevator/output.csv", filePath);
         }

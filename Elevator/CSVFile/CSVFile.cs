@@ -46,7 +46,7 @@ namespace CSVFileNS
                     sw.WriteLine("Current Time,People In Lift,Current Floor,Floor Queue"); 
                 }
             }
-            string textOutput = currentTime.ToString() + "," + String.Join(";", peopleInLift) + "," + currentFloor.ToString() + "," + String.Join(";", floorQueue); 
+            string textOutput = currentTime.ToString() + "," + String.Join(";", peopleInLift) + "," + currentFloor.ToString() + "," + String.Join(";", floorQueue) + "\n"; 
             File.AppendAllText(filePath, textOutput);
 
             return filePath;
