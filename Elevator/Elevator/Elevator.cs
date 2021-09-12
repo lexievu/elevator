@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualBasic.FileIO;
+using PassengerNS; 
 
 namespace ElevatorNS
 {
@@ -8,7 +9,7 @@ namespace ElevatorNS
     public class Elevator
     {
         // private int currentTime = 0;
-        public List<int> peopleInLift = new List<int>();
+        public List<Passenger> peopleInLift = new List<Passenger>();
         public double currentFloor = 1.0;
         public List<int> currentQueue = new List<int>();
         public List<int> oppositeQueue = new List<int>();
