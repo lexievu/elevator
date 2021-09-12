@@ -61,7 +61,26 @@ namespace SimulationTestNS
         [TestMethod]
         public void increment_adjustingPassengerLists() 
         {
+            Simulation simulation = new Simulation(); 
+            simulation.elevator.currentFloor = 5; 
+
+            Passenger pas1 = new Passenger(1, 1, 5, 1); 
+            Passenger pas2 = new Passenger(2, 7, 1, 1);
+            Passenger pas3 = new Passenger(3, 4, 8, 1);
+            Passenger pas4 = new Passenger(4, 2, 5, 1);
+            Passenger pas5 = new Passenger(5, 9, 3, 5);
+
+            simulation.remainingPassengers = new List<Passenger>() {pas1, pas2, pas3, pas4, pas5}; 
+
+            simulation.increment(); 
+
+            List<Passenger> expectedWaitingPassengers = new List<Passenger>() {pas2, pas3};
+            List<Passenger> expectedPeopleInLift = new List<Passenger>() {pas1, pas4};
+            List<Passenger> expectedRemainingPassengers = new List<Passenger>() {pas5};
             
+            CollectionAssert.AreEquivalent(expectedWaitingPassengers, simulation.waitingPassengers);
+            CollectionAssert.AreEquivalent(expectedPeopleInLift, simulation.elevator.peopleInLift); 
+            CollectionAssert.AreEquivalent(expectedRemainingPassengers, simulation.remainingPassengers);
         }
     }
 }

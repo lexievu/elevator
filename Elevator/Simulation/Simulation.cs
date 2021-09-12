@@ -47,7 +47,7 @@ namespace SimulationNS
         {
             time += timeStep; 
 
-            while (remainingPassengers[0].startWaitingAt > time) 
+            while (remainingPassengers.Count >= 1 && remainingPassengers[0].startWaitingAt >= time) 
             {
                 elevator.addFloorToQueue(remainingPassengers[0].atFloor); // Note: the elevator is not aware of the passenger's goingToFloor until the passenger has entered the elevator
                 if (Math.Abs(remainingPassengers[0].atFloor - elevator.currentFloor) > 0.0001)
