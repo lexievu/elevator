@@ -262,5 +262,152 @@ namespace ElevatorTests
             elevator.Direction = Elevator.ElevatorDirection.DOWN;
             elevator.changeDirection();
         }
+
+        [TestMethod]
+        public void increment_elevatorStationary() {
+            Elevator elevator = new Elevator(3); 
+            elevator.increment(); 
+
+            List<int> emptyList = new List<int>(); 
+
+            Assert.AreEqual(3, elevator.currentFloor, 0.0001);
+            Assert.AreEqual(Elevator.ElevatorDirection.STATIONARY, elevator.Direction); 
+            CollectionAssert.AreEquivalent(emptyList, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(emptyList, elevator.oppositeQueue);
+        }
+
+        [TestMethod]
+        public void increment_elevatorUp() {
+            Elevator elevator = new Elevator(3); 
+            elevator.Direction = Elevator.ElevatorDirection.UP;
+            elevator.currentQueue = new List<int>(){5}; 
+            elevator.increment(); 
+
+            List<int> emptyList = new List<int>(); 
+            List<int> expectedCurrentQueue = new List<int>(){5}; 
+
+            Assert.AreEqual(3.1 , elevator.currentFloor, 0.0001);
+            Assert.AreEqual(Elevator.ElevatorDirection.UP, elevator.Direction); 
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(emptyList, elevator.oppositeQueue);
+        }
+
+        [TestMethod]
+        public void increment_elevatorDown() {
+            Elevator elevator = new Elevator(3); 
+            elevator.Direction = Elevator.ElevatorDirection.DOWN;
+            elevator.currentQueue = new List<int>(){1}; 
+            elevator.increment(); 
+
+            List<int> emptyList = new List<int>(); 
+            List<int> expectedCurrentQueue = new List<int>(){1}; 
+
+            Assert.AreEqual(2.9 , elevator.currentFloor, 0.0001);
+            Assert.AreEqual(Elevator.ElevatorDirection.DOWN, elevator.Direction); 
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(emptyList, elevator.oppositeQueue);
+        }
+
+        [TestMethod]
+        public void increment_elevatorUp_removeFromQueue() {
+            Elevator elevator = new Elevator(4.9); 
+            elevator.Direction = Elevator.ElevatorDirection.UP;
+            elevator.currentQueue = new List<int>(){5, 7};
+            elevator.oppositeQueue = new List<int>(){3,2,1}; 
+            elevator.increment(); 
+
+            List<int> expectedOppositeQueue = new List<int>(){3,2,1}; 
+            List<int> expectedCurrentQueue = new List<int>(){7}; 
+
+            Assert.AreEqual(5 , elevator.currentFloor, 0.0001);
+            Assert.AreEqual(Elevator.ElevatorDirection.UP, elevator.Direction); 
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(expectedOppositeQueue, elevator.oppositeQueue);
+        }
+        
+        [TestMethod]
+        public void increment_elevatorDown_removeFromQueue() {
+            Elevator elevator = new Elevator(3.1); 
+            elevator.Direction = Elevator.ElevatorDirection.DOWN;
+            elevator.currentQueue = new List<int>(){3, 1}; 
+            elevator.increment(); 
+
+            List<int> emptyList = new List<int>(); 
+            List<int> expectedCurrentQueue = new List<int>(){1}; 
+
+            Assert.AreEqual(3 , elevator.currentFloor, 0.0001);
+            Assert.AreEqual(Elevator.ElevatorDirection.DOWN, elevator.Direction); 
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(emptyList, elevator.oppositeQueue);
+        }
+
+        [TestMethod]
+        public void increment_elevatorUp_removeFromQueue_currentQueueEmpty_oppositeQueueNotEmpty() {
+            Elevator elevator = new Elevator(4.9); 
+            elevator.Direction = Elevator.ElevatorDirection.UP;
+            elevator.currentQueue = new List<int>(){5};
+            elevator.oppositeQueue = new List<int>(){3,2,1}; 
+            elevator.increment(); 
+
+            List<int> expectedCurrentQueue = new List<int>(){3,2,1}; 
+            List<int> expectedOppositeQueue = new List<int>(); 
+
+            Assert.AreEqual(5 , elevator.currentFloor, 0.0001);
+            Assert.AreEqual(Elevator.ElevatorDirection.DOWN, elevator.Direction); 
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(expectedOppositeQueue, elevator.oppositeQueue);
+        }
+
+        [TestMethod]
+        public void increment_elevatorDown_removeFromQueue_currentQueueEmpty_oppositeQueueNotEmpty() {
+            Elevator elevator = new Elevator(3.1); 
+            elevator.Direction = Elevator.ElevatorDirection.DOWN;
+            elevator.currentQueue = new List<int>(){3}; 
+            elevator.oppositeQueue = new List<int>(){5, 7};
+            elevator.increment(); 
+
+            List<int> expectedCurrentQueue = new List<int>(){5, 7}; 
+            List<int> expectedOppositeQueue = new List<int>(); 
+
+            Assert.AreEqual(3, elevator.currentFloor, 0.0001);
+            Assert.AreEqual(Elevator.ElevatorDirection.UP, elevator.Direction); 
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(expectedOppositeQueue, elevator.oppositeQueue);
+        }
+
+        [TestMethod]
+        public void increment_elevatorUp_removeFromQueue_currentQueueEmpty_oppositeQueueEmpty() {
+            Elevator elevator = new Elevator(4.9); 
+            elevator.Direction = Elevator.ElevatorDirection.UP;
+            elevator.currentQueue = new List<int>(){5};
+            elevator.oppositeQueue = new List<int>(); 
+            elevator.increment(); 
+
+            List<int> expectedCurrentQueue = new List<int>(); 
+            List<int> expectedOppositeQueue = new List<int>(); 
+
+            Assert.AreEqual(5 , elevator.currentFloor, 0.0001);
+            Assert.AreEqual(Elevator.ElevatorDirection.STATIONARY, elevator.Direction); 
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(expectedOppositeQueue, elevator.oppositeQueue);
+        }
+
+        [TestMethod]
+        public void increment_elevatorDown_removeFromQueue_currentQueueEmpty_oppositeQueueEmpty() 
+        {
+            Elevator elevator = new Elevator(7.1); 
+            elevator.Direction = Elevator.ElevatorDirection.DOWN;
+            elevator.currentQueue = new List<int>(){7}; 
+            elevator.oppositeQueue = new List<int>();
+            elevator.increment(); 
+
+            List<int> expectedCurrentQueue = new List<int>(); 
+            List<int> expectedOppositeQueue = new List<int>(); 
+
+            Assert.AreEqual(7, elevator.currentFloor, 0.0001);
+            Assert.AreEqual(Elevator.ElevatorDirection.STATIONARY, elevator.Direction); 
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(expectedOppositeQueue, elevator.oppositeQueue);
+        }
     }
 }
