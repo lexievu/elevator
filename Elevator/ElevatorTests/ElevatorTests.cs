@@ -250,5 +250,17 @@ namespace ElevatorTests
             CollectionAssert.AreEquivalent(newCurrentQueue, elevator.currentQueue);
             CollectionAssert.AreEquivalent(newOppositeQueue, elevator.oppositeQueue);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException),
+            "The current queue inappropriately not empty allowed.")]
+        public void changeDirection_NotEmptyCurrentQueue()
+        {
+            Elevator elevator = new Elevator(3);
+            elevator.currentQueue = new List<int> { 2 };
+            elevator.oppositeQueue = new List<int>() { 4, 7, 9 };
+            elevator.Direction = Elevator.ElevatorDirection.DOWN;
+            elevator.changeDirection();
+        }
     }
 }
