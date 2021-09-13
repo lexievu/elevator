@@ -115,6 +115,8 @@ namespace SimulationTestNS
             var expectedCurrentQueue = new List<int>(){7,9,10};
             var expectedOppositeQueue = new List<int>(){4,2};
 
+            Assert.AreEqual(40, simulation.time, 0.001);
+            Assert.AreEqual(5, simulation.elevator.currentFloor, 0.001);
             CollectionAssert.AreEquivalent(expectedPeopleInLift, simulation.elevator.peopleInLift); 
             CollectionAssert.AreEquivalent(expectedWaitingPassengers, simulation.waitingPassengers); 
             CollectionAssert.AreEquivalent(expectedRemainingPassengers, simulation.remainingPassengers); 

@@ -55,8 +55,6 @@ namespace SimulationNS
                 } 
                 else 
                 {
-                    // elevator.peopleInLift.Add(remainingPassengers[0]);
-                    // elevator.addFloorToQueue(remainingPassengers[0].goingToFloor);
                     pickUpPassenger(remainingPassengers[0]);
                 }
                 
@@ -68,9 +66,14 @@ namespace SimulationNS
         {
             time += timeStep; 
 
-            elevator.increment();
+            this.elevator.increment(timeStep);
 
             movingPassengersToCorrectList();
+
+            if (Math.Abs(elevator.currentFloor - elevator.currentQueue[0]) < 0.0001)
+            {
+                elevator.currentQueue.RemoveAt(0);                dropOffPassengers();
+            }
         }
     }
 }
