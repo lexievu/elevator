@@ -64,10 +64,10 @@ namespace SimulationTestNS
             Simulation simulation = new Simulation(); 
             simulation.elevator.currentFloor = 5; 
 
-            Passenger pas1 = new Passenger(1, 1, 5, 1); 
+            Passenger pas1 = new Passenger(1, 5, 1, 1); 
             Passenger pas2 = new Passenger(2, 7, 1, 1);
             Passenger pas3 = new Passenger(3, 4, 8, 1);
-            Passenger pas4 = new Passenger(4, 2, 5, 1);
+            Passenger pas4 = new Passenger(4, 5, 2, 1);
             Passenger pas5 = new Passenger(5, 9, 3, 5);
 
             simulation.remainingPassengers = new List<Passenger>() {pas1, pas2, pas3, pas4, pas5}; 
@@ -81,6 +81,44 @@ namespace SimulationTestNS
             CollectionAssert.AreEquivalent(expectedWaitingPassengers, simulation.waitingPassengers);
             CollectionAssert.AreEquivalent(expectedPeopleInLift, simulation.elevator.peopleInLift); 
             CollectionAssert.AreEquivalent(expectedRemainingPassengers, simulation.remainingPassengers);
+        }
+
+        [TestMethod]
+        public void increment_mockTest()
+        {
+            Simulation simulation = new Simulation(); 
+            simulation.elevator.currentFloor = 4.9;
+            simulation.time = 39; 
+
+            Passenger pas1 = new Passenger(1,1,5,1); 
+            Passenger pas2 = new Passenger(2,2,7,4); 
+            Passenger pas3 = new Passenger(3,7,4,10); 
+            Passenger pas4 = new Passenger(4,5,9,30); 
+            Passenger pas5 = new Passenger(5,2,10,35); 
+            Passenger pas6 = new Passenger(6,5,10,40); 
+            Passenger pas7 = new Passenger(7,4,1,40); 
+            Passenger pas8 = new Passenger(8,10,2,52);
+
+            simulation.elevator.peopleInLift = new List<Passenger>() {pas1, pas2};
+            simulation.waitingPassengers = new List<Passenger>() {pas3, pas4, pas5}; 
+            simulation.remainingPassengers = new List<Passenger>() {pas6, pas7, pas8}; 
+
+            simulation.elevator.currentQueue = new List<int>() {5,7}; 
+            simulation.elevator.oppositeQueue = new List<int>() {2}; 
+
+            simulation.increment(); 
+
+            var expectedPeopleInLift = new List<Passenger>(){pas2, pas4, pas6};
+            var expectedWaitingPassengers = new List<Passenger>(){pas3, pas5, pas7}; 
+            var expectedRemainingPassengers = new List<Passenger>(){pas8}; 
+            var expectedCurrentQueue = new List<int>(){7,9,10};
+            var expectedOppositeQueue = new List<int>(){4,2};
+
+            CollectionAssert.AreEquivalent(expectedPeopleInLift, simulation.elvator.peopleInLift); 
+            CollectionAssert.AreEquivalent(expectedWaitingPassengers, simulation.waitingPassengers); 
+            CollectionAssert.AreEquivalent(expectedRemainingPassengers, simulation.remainingPassengers); 
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, simulation.elevator.currentQueue); 
+            CollectionAssert.AreEquivalent(expectedOppositeQueue, simulation.elevator.oppositeQueue); 
         }
     }
 }
