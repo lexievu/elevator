@@ -11,7 +11,7 @@ namespace SimulationNS
         public readonly List<Passenger> allPassengers = new List<Passenger>();
         public List<Passenger> remainingPassengers = new List<Passenger>();
         public List<Passenger> waitingPassengers = new List<Passenger>(); 
-        private int time = 0; 
+        public int time = 0; 
         public Elevator elevator; 
 
         public Simulation() 
@@ -43,12 +43,9 @@ namespace SimulationNS
             }
         }
 
-        public void increment(int timeStep = 1) 
+        public void movingPassengersToCorrectList() 
         {
-            time += timeStep; 
-
-            elevator.increment();
-
+            // Assume that the remaining passengers list is sorted by the start waiting at time
             while (remainingPassengers.Count >= 1 && remainingPassengers[0].startWaitingAt <= time) 
             {
                 elevator.addFloorToQueue(remainingPassengers[0].atFloor); // Note: the elevator is not aware of the passenger's goingToFloor until the passenger has entered the elevator
@@ -58,12 +55,22 @@ namespace SimulationNS
                 } 
                 else 
                 {
-                    elevator.peopleInLift.Add(remainingPassengers[0]);
-                    elevator.addFloorToQueue(remainingPassengers[0].goingToFloor);
+                    // elevator.peopleInLift.Add(remainingPassengers[0]);
+                    // elevator.addFloorToQueue(remainingPassengers[0].goingToFloor);
+                    pickUpPassenger(remainingPassengers[0]);
                 }
                 
                 remainingPassengers.RemoveAt(0); 
             }
+        }
+
+        public void increment(int timeStep = 1) 
+        {
+            time += timeStep; 
+
+            elevator.increment();
+
+            movingPassengersToCorrectList();
         }
     }
 }

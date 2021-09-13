@@ -59,10 +59,11 @@ namespace SimulationTestNS
         }
 
         [TestMethod]
-        public void increment_adjustingPassengerLists() 
+        public void adjustingPassengerLists() 
         {
             Simulation simulation = new Simulation(); 
-            simulation.elevator.currentFloor = 5; 
+            simulation.elevator.currentFloor = 5;
+            simulation.time = 1; 
 
             Passenger pas1 = new Passenger(1, 5, 1, 1); 
             Passenger pas2 = new Passenger(2, 7, 1, 1);
@@ -72,7 +73,7 @@ namespace SimulationTestNS
 
             simulation.remainingPassengers = new List<Passenger>() {pas1, pas2, pas3, pas4, pas5}; 
 
-            simulation.increment(); 
+            simulation.movingPassengersToCorrectList(); 
 
             List<Passenger> expectedWaitingPassengers = new List<Passenger>() {pas2, pas3};
             List<Passenger> expectedPeopleInLift = new List<Passenger>() {pas1, pas4};
@@ -114,7 +115,7 @@ namespace SimulationTestNS
             var expectedCurrentQueue = new List<int>(){7,9,10};
             var expectedOppositeQueue = new List<int>(){4,2};
 
-            CollectionAssert.AreEquivalent(expectedPeopleInLift, simulation.elvator.peopleInLift); 
+            CollectionAssert.AreEquivalent(expectedPeopleInLift, simulation.elevator.peopleInLift); 
             CollectionAssert.AreEquivalent(expectedWaitingPassengers, simulation.waitingPassengers); 
             CollectionAssert.AreEquivalent(expectedRemainingPassengers, simulation.remainingPassengers); 
             CollectionAssert.AreEquivalent(expectedCurrentQueue, simulation.elevator.currentQueue); 
