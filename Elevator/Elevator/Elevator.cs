@@ -163,14 +163,6 @@ namespace ElevatorNS
         {
             if (peopleInLift.Count > 0) 
             {
-                // foreach (var passenger in peopleInLift) 
-                // {
-                //     if (Math.Abs(passenger.goingToFloor - currentFloor) < 0.0001) 
-                //     {
-                //         peopleInLift.Remove(passenger); 
-                //     }
-                // }
-
                 peopleInLift.RemoveAll(passenger => Math.Abs(passenger.goingToFloor - currentFloor) < 0.0001);
             }
         }

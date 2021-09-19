@@ -30,7 +30,6 @@ namespace CSVFileNS
                     int goingToFloor = Int32.Parse(fields[2]);
                     int time = Int32.Parse(fields[3]);
                     passengers.Add(new Passenger(personID, atFloor, goingToFloor, time));
-                    // Console.WriteLine(personID.ToString() + " " + atFloor.ToString() + " " + goingToFloor.ToString() + " " + time.ToString());
                 }
             }
 
