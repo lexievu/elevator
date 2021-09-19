@@ -6,6 +6,14 @@ using System.Collections.Generic;
 
 namespace SimulationNS
 {
+    // public class Program 
+    // {
+    //     public static void Main () 
+    //     {
+    //         Simulation simulation = new Simulation(); 
+    //     }
+    // }
+
     public class Simulation
     {
         public readonly List<Passenger> allPassengers = new List<Passenger>();
@@ -21,29 +29,24 @@ namespace SimulationNS
             elevator = new Elevator();
         }
 
-        public void pickUpPassenger(Passenger passenger) 
+        public void pickUpPassengers() 
         {
-            if (Math.Abs(passenger.goingToFloor - elevator.currentFloor) > 0.0001)
+            if (waitingPassengers.Count > 0) {
+                foreach (var passenger in waitingPassengers)
                 {
-                    // Pick up the passengers that are not being picked up and dropped off at the same floor (e.g. passenger changed their mind)
+                    if (Math.Abs(passenger.goingToFloor - elevator.currentFloor) > 0.0001)
+                    {
+                        // Pick up the passengers that are not being picked up and dropped off at the same floor (e.g. passenger changed their mind)
 
-                    elevator.peopleInLift.Add(passenger); 
-                    elevator.addFloorToQueue(passenger.goingToFloor);
-                }
-        }
-
-        public void dropOffPassengers() 
-        {
-            foreach (var passenger in elevator.peopleInLift) 
-            {
-                if (Math.Abs(passenger.goingToFloor - elevator.currentFloor) < 0.0001) 
-                {
-                    elevator.peopleInLift.Remove(passenger); 
+                        elevator.peopleInLift.Add(passenger); 
+                        waitingPassengers.Remove(passenger);
+                        elevator.addFloorToQueue(passenger.goingToFloor);
+                    }
                 }
             }
         }
 
-        public void movingPassengersToCorrectList() 
+        public void movingFromRemainingPassengers() 
         {
             // Assume that the remaining passengers list is sorted by the start waiting at time
             while (remainingPassengers.Count >= 1 && remainingPassengers[0].startWaitingAt <= time) 
@@ -55,7 +58,8 @@ namespace SimulationNS
                 } 
                 else 
                 {
-                    pickUpPassenger(remainingPassengers[0]);
+                    elevator.peopleInLift.Add(remainingPassengers[0]); 
+                    elevator.addFloorToQueue(remainingPassengers[0].goingToFloor);
                 }
                 
                 remainingPassengers.RemoveAt(0); 
@@ -68,12 +72,8 @@ namespace SimulationNS
 
             this.elevator.increment(timeStep);
 
-            movingPassengersToCorrectList();
-
-            if (Math.Abs(elevator.currentFloor - elevator.currentQueue[0]) < 0.0001)
-            {
-                elevator.currentQueue.RemoveAt(0);                dropOffPassengers();
-            }
+            pickUpPassengers();
+            movingFromRemainingPassengers();
         }
     }
 }
