@@ -24,8 +24,8 @@ namespace ElevatorNS
         }
 
         public void addFloorToQueue (int floor) {
-            // Only do something if the given floor is not the current floor
-            if (Math.Abs(currentFloor - floor) > 0.0001)
+            // Only do something if the given floor is not the current floor and not in the queue
+            if (Math.Abs(currentFloor - floor) > 0.0001 && !currentQueue.Contains(floor) && !oppositeQueue.Contains(floor))
             {
                 if (Direction == ElevatorDirection.UP)
                 {
