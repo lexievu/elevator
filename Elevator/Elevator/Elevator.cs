@@ -17,6 +17,15 @@ namespace ElevatorNS
         private ElevatorDirection _Direction = ElevatorDirection.STATIONARY;
         private int topFloor;
         private double timeToTravelOneFloor = 10; 
+        private int _maximumCapacity = 8; 
+
+        public int maximumCapacity 
+        {
+            get 
+            {
+                return _maximumCapacity;
+            }
+        }
 
         public double currentFloor 
         {

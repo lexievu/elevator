@@ -107,20 +107,50 @@ namespace SimulationNS
         /// </summary>
         public void movingFromWaitingPassengers() 
         {
-            if (waitingPassengers.Count > 0) {
-                foreach (var passenger in waitingPassengers)
+            if (waitingPassengers.Count > 0) 
+            {
+                List<Passenger> passengersToRemove = new List<Passenger>(); 
+
+                for (int i = 0; i < waitingPassengers.Count; i++) 
                 {
+                    Passenger passenger = waitingPassengers[i]; 
+
                     if (Math.Abs(passenger.atFloor - elevator.currentFloor) < 0.0001 && Math.Abs(passenger.goingToFloor - elevator.currentFloor) > 0.0001)
                     {
                         // Pick up the passengers that are not being picked up and dropped off at the same floor (e.g. passenger changed their mind)
-
-                        elevator.peopleInLift.Add(passenger); 
-                        elevator.addFloorToQueue(passenger.goingToFloor);
+                        if (elevator.peopleInLift.Count < elevator.maximumCapacity) 
+                        {
+                            elevator.peopleInLift.Add(passenger); 
+                            elevator.addFloorToQueue(passenger.goingToFloor);
+                            passengersToRemove.Add(passenger);
+                        }
+                        
+                    }
+                }
+                // foreach (var passenger in waitingPassengers)
+                // {
+                //     if (Math.Abs(passenger.atFloor - elevator.currentFloor) < 0.0001 && Math.Abs(passenger.goingToFloor - elevator.currentFloor) > 0.0001)
+                //     {
+                //         // Pick up the passengers that are not being picked up and dropped off at the same floor (e.g. passenger changed their mind)
+                //         if (elevator.peopleInLift.Count < 8) 
+                //         {
+                //             elevator.peopleInLift.Add(passenger); 
+                //             elevator.addFloorToQueue(passenger.goingToFloor);
+                //         }
+                        
+                //     }
+                // }
+                
+                // Remove the passengers waiting at the current floor from the list of waitingPassengers
+                // waitingPassengers.RemoveAll(passenger => Math.Abs(passenger.atFloor - elevator.currentFloor) < 0.0001);
+                if (passengersToRemove.Count > 0)
+                {
+                    foreach (Passenger passenger in passengersToRemove)
+                    {
+                        waitingPassengers.Remove(passenger);
                     }
                 }
                 
-                // Remove the passengers waiting at the current floor from the list of waitingPassengers
-                waitingPassengers.RemoveAll(passenger => Math.Abs(passenger.atFloor - elevator.currentFloor) < 0.0001);
             }
         }
 
@@ -135,7 +165,7 @@ namespace SimulationNS
             while (remainingPassengers.Count >= 1 && remainingPassengers[0].startWaitingAt <= time) 
             {
                 elevator.addFloorToQueue(remainingPassengers[0].atFloor); // Note: the elevator is not aware of the passenger's goingToFloor until the passenger has entered the elevator
-                if (Math.Abs(remainingPassengers[0].atFloor - elevator.currentFloor) > 0.0001)
+                if (Math.Abs(remainingPassengers[0].atFloor - elevator.currentFloor) > 0.0001 || elevator.peopleInLift.Count >= elevator.maximumCapacity)
                 {
                     waitingPassengers.Add(remainingPassengers[0]); 
                 } 
