@@ -97,6 +97,22 @@ namespace ElevatorNS
             }
         }
 
+        public void dropOffPassengers() 
+        {
+            if (peopleInLift.Count > 0) 
+            {
+                // foreach (var passenger in peopleInLift) 
+                // {
+                //     if (Math.Abs(passenger.goingToFloor - currentFloor) < 0.0001) 
+                //     {
+                //         peopleInLift.Remove(passenger); 
+                //     }
+                // }
+
+                peopleInLift.RemoveAll(passenger => Math.Abs(passenger.goingToFloor - currentFloor) < 0.0001);
+            }
+        }
+
         public void increment (double timeStep = 1) 
         {
             if (Direction != ElevatorDirection.STATIONARY) 
@@ -111,9 +127,10 @@ namespace ElevatorNS
                 }
 
                 // Remove floor from queue when the elevator gets to the floor 
-                if (Math.Abs(currentFloor - currentQueue[0]) < 0.0001) 
+                if (this.currentQueue.Count > 0 && Math.Abs(currentFloor - currentQueue[0]) < 0.0001) 
                 { 
                     this.currentQueue.RemoveAt(0); 
+                    dropOffPassengers();
                 }
 
                 // If current queue is empty, change the elevator direction

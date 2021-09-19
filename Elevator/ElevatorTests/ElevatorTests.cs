@@ -2,6 +2,7 @@
 using ElevatorNS;
 using System;
 using System.Collections.Generic;
+using PassengerNS;
 
 namespace ElevatorTests
 {
@@ -408,6 +409,24 @@ namespace ElevatorTests
             Assert.AreEqual(Elevator.ElevatorDirection.STATIONARY, elevator.Direction); 
             CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
             CollectionAssert.AreEquivalent(expectedOppositeQueue, elevator.oppositeQueue);
+        }
+
+        [TestMethod]
+        public void testDropOff()
+        {
+            Elevator elevator = new Elevator(); 
+            elevator.currentFloor = 5; 
+
+            Passenger pas1 = new Passenger(1, 1, 5, 1);
+            Passenger pas2 = new Passenger(2, 2, 7, 4);
+
+            elevator.peopleInLift = new List<Passenger>() { pas1, pas2 };
+
+            elevator.dropOffPassengers(); 
+
+            var expectedPeopleInLift = new List<Passenger>() { pas2 };
+
+            CollectionAssert.AreEquivalent(expectedPeopleInLift, elevator.peopleInLift);
         }
     }
 }
