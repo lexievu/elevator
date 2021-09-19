@@ -6,8 +6,15 @@ using System.IO;
 
 namespace CSVFileNS
 {
+    /// <summary>
+    /// The CSVFile class focuses on reading the passengers' information from a csv file and writing the results to a output.csv file.
+    /// </summary>
     public class CSVFile
     {
+        /// <summary>
+        /// This function reads from the input file with the passengers information. 
+        /// It returns a list of all passengers listed in the input csv file.
+        /// </summary>
         public static List<Passenger> readPassengersCSV()
         {
             var passengers = new List<Passenger>(); 
@@ -36,6 +43,10 @@ namespace CSVFileNS
             return passengers;
         }
 
+        /// <summary>
+        /// Given the current time, the list of IDs of the passengers in lift, the current floor and the floorqueue, 
+        /// this function writes the result as a new line in the output.csv file
+        /// </summary>
         public static string WriteResults(int currentTime, List<int> peopleInLift, double currentFloor, List<int> floorQueue, string filePath = "/Users/thienhuongvu/Projects/elevator/Elevator/output.csv") 
         {
             if (!File.Exists(filePath)) {

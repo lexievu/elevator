@@ -21,45 +21,6 @@ namespace SimulationTestNS
         }
 
         [TestMethod]
-        public void pickUpPassengers () {
-            Simulation simulation = new Simulation(); 
-            Passenger pas1 = new Passenger(1, 1, 5, 1); 
-            Passenger pas2 = new Passenger(2, 1, 1, 1);
-
-            simulation.pickUpPassenger(pas1); 
-            simulation.pickUpPassenger(pas2);
-
-            List<int> expectedFloorQueue = new List<int>() {5}; 
-
-            Assert.AreEqual(1, simulation.elevator.peopleInLift.Count, 0.001);
-            Assert.AreEqual(5, simulation.elevator.peopleInLift[0].goingToFloor, 0.001);
-            CollectionAssert.AreEquivalent(expectedFloorQueue, simulation.elevator.currentQueue);
-        }
-
-        [TestMethod]
-        public void dropOffPassengers () {
-            Simulation simulation = new Simulation(); 
-            simulation.elevator.currentFloor = 5; 
-            Passenger pas1 = new Passenger(1, 1, 5, 1); 
-            Passenger pas2 = new Passenger(2, 7, 1, 1);
-            Passenger pas3 = new Passenger(3, 4, 8, 1);
-            Passenger pas4 = new Passenger(4, 2, 5, 1);
-            Passenger pas5 = new Passenger(5, 9, 3, 1);
-
-            simulation.pickUpPassenger(pas1); 
-            simulation.pickUpPassenger(pas2);
-            simulation.pickUpPassenger(pas3);
-            simulation.pickUpPassenger(pas4);
-            simulation.pickUpPassenger(pas5);
-
-            List<Passenger> expectedPassengers = new List<Passenger>() {pas2, pas3, pas5}; 
-
-            Assert.AreEqual(3, simulation.elevator.peopleInLift.Count, 0.001);
-            Assert.AreEqual(1, simulation.elevator.peopleInLift[0].goingToFloor, 0.001);
-            CollectionAssert.AreEquivalent(expectedPassengers, simulation.elevator.peopleInLift);
-        }
-
-        [TestMethod]
         public void adjustingPassengerLists() 
         {
             Simulation simulation = new Simulation(); 

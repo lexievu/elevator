@@ -5,7 +5,9 @@ using PassengerNS;
 
 namespace ElevatorNS
 {
-
+    /// <summary>
+    /// The Elevator class encapsulates the behaviour of an elevator in our prototype.
+    /// </summary>
     public class Elevator
     {
         private List<Passenger> _peopleInLift = new List<Passenger>();
@@ -79,12 +81,18 @@ namespace ElevatorNS
             }
         }
 
+        /// <summary>
+        /// Instantiating an elevator
+        /// </summary>
         public Elevator (double currentFloor = 1.0, int numberOfFloors = 10)
         {
             this.currentFloor = currentFloor; 
             topFloor = numberOfFloors; 
         }
 
+        /// <summary>
+        /// This function add a floor to the floor queue
+        /// </summary> 
         public void addFloorToQueue (int floor) {
             // Only do something if the given floor is not the current floor and not in the queue
             if (Math.Abs(currentFloor - floor) > 0.0001 && !currentQueue.Contains(floor) && !oppositeQueue.Contains(floor))
@@ -131,6 +139,9 @@ namespace ElevatorNS
             }
         }
 
+        /// <summary>
+        /// This function changes the direction of the elevator when the current queue is empty. 
+        /// </summary>
         public void changeDirection() 
         {
             // Thow an exception if the current queue is not empty 
@@ -159,6 +170,9 @@ namespace ElevatorNS
             }
         }
 
+        /// <summary>
+        /// This function removes a passenger from the elevator when the elevator is at their desired floor (goingToFloor).
+        /// </summary>
         public void dropOffPassengers() 
         {
             if (peopleInLift.Count > 0) 
@@ -167,16 +181,21 @@ namespace ElevatorNS
             }
         }
 
+        /// <summary>
+        /// This function calculates the new state of the elevator after a single time step. 
+        /// </summary>
         public void increment (double timeStep = 1) 
         {
             if (Direction != ElevatorDirection.STATIONARY) 
             {
                 if (Direction == ElevatorDirection.UP) 
                 {
+                    // Move the elevator up, if the elevator is going up
                     this.currentFloor += timeStep / timeToTravelOneFloor; 
                 }
                 else if (Direction == ElevatorDirection.DOWN)
                 {
+                    // Move the elevator down, if the elevator is going down
                     this.currentFloor -= timeStep / timeToTravelOneFloor;
                 }
 
