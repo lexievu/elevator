@@ -37,7 +37,7 @@ namespace CSVFileNS
             return passengers;
         }
 
-        public static string WriteResults(int currentTime, List<int> peopleInLift, int currentFloor, List<int> floorQueue, string filePath = "/Users/thienhuongvu/Projects/elevator/Elevator/output.csv") 
+        public static string WriteResults(int currentTime, List<int> peopleInLift, double currentFloor, List<int> floorQueue, string filePath = "/Users/thienhuongvu/Projects/elevator/Elevator/output.csv") 
         {
             if (!File.Exists(filePath)) {
                 // Create a file to write to

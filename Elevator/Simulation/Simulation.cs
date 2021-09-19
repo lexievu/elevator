@@ -6,13 +6,28 @@ using System.Collections.Generic;
 
 namespace SimulationNS
 {
-    // public class Program 
-    // {
-    //     public static void Main () 
-    //     {
-    //         Simulation simulation = new Simulation(); 
-    //     }
-    // }
+    public class Program 
+    {
+        public static void Main () 
+        {
+            Simulation simulation = new Simulation(); 
+
+            do 
+            {
+                simulation.increment(); 
+                if (simulation.elevator.currentQueue.Count > 0) 
+                {
+                    List<int> currentQueue = new List<int>(simulation.elevator.currentQueue);
+                    currentQueue.AddRange(simulation.elevator.oppositeQueue);
+                    CSVFile.WriteResults(simulation.time, simulation.elevator.peopleInLift.ConvertAll(passenger => passenger.id), simulation.elevator.currentFloor, currentQueue);
+                }
+                else {
+                    CSVFile.WriteResults(simulation.time, simulation.elevator.peopleInLift.ConvertAll(passenger => passenger.id), simulation.elevator.currentFloor,simulation.elevator.oppositeQueue);
+                }
+            }
+            while (simulation.allPassengers.Count > 0 || simulation.elevator.peopleInLift.Count > 0);
+        }
+    }
 
     public class Simulation
     {
