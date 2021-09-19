@@ -428,5 +428,26 @@ namespace ElevatorTests
 
             CollectionAssert.AreEquivalent(expectedPeopleInLift, elevator.peopleInLift);
         }
+
+        [TestMethod]
+        public void addFloorToQueueRep ()
+        {
+            // Arrange
+            Elevator elevator = new Elevator(5);
+            elevator.Direction = Elevator.ElevatorDirection.STATIONARY;
+
+            // Act
+            elevator.addFloorToQueue(1);
+            elevator.addFloorToQueue(2);
+            elevator.addFloorToQueue(7);
+            elevator.addFloorToQueue(1);
+
+            int[] expectedCurrentQueue = { 2, 1 };
+            int[] expectedOppositeQueue = { 7 };
+
+            // Assert
+            CollectionAssert.AreEquivalent(expectedCurrentQueue, elevator.currentQueue);
+            CollectionAssert.AreEquivalent(expectedOppositeQueue, elevator.oppositeQueue);
+        }
     }
 }
