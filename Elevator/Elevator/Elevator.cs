@@ -8,14 +8,76 @@ namespace ElevatorNS
 
     public class Elevator
     {
-        // private int currentTime = 0;
-        public List<Passenger> peopleInLift = new List<Passenger>();
-        public double currentFloor = 1.0;
-        public List<int> currentQueue = new List<int>();
-        public List<int> oppositeQueue = new List<int>();
-        public ElevatorDirection Direction = ElevatorDirection.STATIONARY;
+        private List<Passenger> _peopleInLift = new List<Passenger>();
+        private double _currentFloor = 1.0;
+        private List<int> _currentQueue = new List<int>();
+        private List<int> _oppositeQueue = new List<int>();
+        private ElevatorDirection _Direction = ElevatorDirection.STATIONARY;
         private int topFloor;
         private double timeToTravelOneFloor = 10; 
+
+        public double currentFloor 
+        {
+            get 
+            {
+                return _currentFloor;
+            }
+            set 
+            {
+                if (value >= 1.0 && value <= topFloor) 
+                {
+                    _currentFloor = value;
+                }
+            }
+        }
+
+        public List<Passenger> peopleInLift 
+        {
+            get 
+            {
+                return _peopleInLift;
+            }
+            set 
+            {
+                _peopleInLift = value;
+            }
+        }
+
+        public List<int> currentQueue 
+        {
+            get 
+            {
+                return _currentQueue; 
+            }
+            set 
+            {
+                _currentQueue = value;
+            }
+        }
+
+        public List<int> oppositeQueue 
+        {
+            get 
+            {
+                return _oppositeQueue;
+            }
+            set 
+            {
+                _oppositeQueue = value;
+            }
+        }
+
+        public ElevatorDirection Direction 
+        {
+            get 
+            {
+                return _Direction;
+            }
+            set 
+            {
+                _Direction = value;
+            }
+        }
 
         public Elevator (double currentFloor = 1.0, int numberOfFloors = 10)
         {

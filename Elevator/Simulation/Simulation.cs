@@ -36,10 +36,58 @@ namespace SimulationNS
     public class Simulation
     {
         public readonly List<Passenger> allPassengers = new List<Passenger>();
-        public List<Passenger> remainingPassengers = new List<Passenger>();
-        public List<Passenger> waitingPassengers = new List<Passenger>(); 
-        public int time = 0; 
-        public Elevator elevator; 
+        private List<Passenger> _remainingPassengers = new List<Passenger>();
+        private List<Passenger> _waitingPassengers = new List<Passenger>(); 
+        private int _time = 0; 
+        private Elevator _elevator; 
+
+        public List<Passenger> remainingPassengers 
+        {
+            get 
+            {
+                return _remainingPassengers; 
+            }
+            set 
+            {
+                _remainingPassengers = value;
+            }
+        }
+
+        public List<Passenger> waitingPassengers 
+        {
+            get
+            {
+                return _waitingPassengers; 
+            }
+            set 
+            {
+                _waitingPassengers = value;
+            }
+        }
+
+        public int time  
+        {
+            get 
+            {
+                return _time;
+            }
+            set 
+            {
+                _time = value;
+            }
+        }
+
+        public Elevator elevator 
+        {
+            get 
+            {
+                return _elevator;
+            }
+            set 
+            {
+                _elevator = value;
+            }
+        }
 
         public Simulation() 
         {
