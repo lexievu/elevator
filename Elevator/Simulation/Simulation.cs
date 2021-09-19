@@ -29,21 +29,33 @@ namespace SimulationNS
             elevator = new Elevator();
         }
 
-        public void pickUpPassengers() 
+        public void movingFromWaitingPassengers() 
         {
             if (waitingPassengers.Count > 0) {
                 foreach (var passenger in waitingPassengers)
                 {
-                    if (Math.Abs(passenger.goingToFloor - elevator.currentFloor) > 0.0001)
+                    if (Math.Abs(passenger.atFloor - elevator.currentFloor) < 0.0001 && Math.Abs(passenger.goingToFloor - elevator.currentFloor) > 0.0001)
                     {
                         // Pick up the passengers that are not being picked up and dropped off at the same floor (e.g. passenger changed their mind)
 
                         elevator.peopleInLift.Add(passenger); 
-                        waitingPassengers.Remove(passenger);
                         elevator.addFloorToQueue(passenger.goingToFloor);
                     }
                 }
+
+                waitingPassengers.RemoveAll(passenger => Math.Abs(passenger.atFloor - elevator.currentFloor) < 0.0001 && Math.Abs(passenger.goingToFloor - elevator.currentFloor) > 0.0001);
             }
+        }
+
+        public void pickUpPassenger(Passenger passenger)
+        {
+            if (Math.Abs(passenger.goingToFloor - elevator.currentFloor) > 0.0001)
+                {
+                    // Pick up the passengers that are not being picked up and dropped off at the same floor (e.g. passenger changed their mind)
+
+                    elevator.peopleInLift.Add(passenger);
+                    elevator.addFloorToQueue(passenger.goingToFloor);
+                }
         }
 
         public void movingFromRemainingPassengers() 
@@ -72,7 +84,7 @@ namespace SimulationNS
 
             this.elevator.increment(timeStep);
 
-            pickUpPassengers();
+            movingFromWaitingPassengers();
             movingFromRemainingPassengers();
         }
     }

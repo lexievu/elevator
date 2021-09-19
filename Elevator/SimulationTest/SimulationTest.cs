@@ -2,6 +2,7 @@
 using SimulationNS; 
 using System.Collections.Generic;
 using PassengerNS;
+using ElevatorNS;
 
 namespace SimulationTestNS
 {
@@ -73,7 +74,7 @@ namespace SimulationTestNS
 
             simulation.remainingPassengers = new List<Passenger>() {pas1, pas2, pas3, pas4, pas5}; 
 
-            simulation.movingPassengersToCorrectList(); 
+            simulation.movingFromRemainingPassengers(); 
 
             List<Passenger> expectedWaitingPassengers = new List<Passenger>() {pas2, pas3};
             List<Passenger> expectedPeopleInLift = new List<Passenger>() {pas1, pas4};
@@ -85,11 +86,73 @@ namespace SimulationTestNS
         }
 
         [TestMethod]
+        public void testMovingFromWaitingPassengers() 
+        {
+            Simulation simulation = new Simulation();
+            simulation.elevator.currentFloor = 5;
+            simulation.time = 40;
+            simulation.elevator.Direction = Elevator.ElevatorDirection.UP;
+
+            Passenger pas1 = new Passenger(1, 1, 5, 1);
+            Passenger pas2 = new Passenger(2, 2, 7, 4);
+            Passenger pas3 = new Passenger(3, 7, 4, 10);
+            Passenger pas4 = new Passenger(4, 5, 9, 30);
+            Passenger pas5 = new Passenger(5, 2, 10, 35);
+
+            simulation.elevator.peopleInLift = new List<Passenger>() { pas1, pas2 };
+            simulation.waitingPassengers = new List<Passenger>() { pas3, pas4, pas5 };
+
+            simulation.elevator.dropOffPassengers();
+            simulation.movingFromWaitingPassengers();
+
+            var expectedPeopleInLift = new List<Passenger>() {pas2, pas4}; 
+            var expectedWaitingPassengers = new List<Passenger>() {pas3, pas5};
+
+            CollectionAssert.AreEquivalent(expectedPeopleInLift, simulation.elevator.peopleInLift); 
+            CollectionAssert.AreEquivalent(expectedWaitingPassengers, simulation.waitingPassengers);
+        }
+
+        [TestMethod]
+        public void adjustPassengerList1()
+        {
+            Simulation simulation = new Simulation();
+            simulation.elevator.currentFloor = 5;
+            simulation.time = 40;
+            simulation.elevator.Direction = Elevator.ElevatorDirection.UP;
+
+            Passenger pas1 = new Passenger(1, 1, 5, 1);
+            Passenger pas2 = new Passenger(2, 2, 7, 4);
+            Passenger pas3 = new Passenger(3, 7, 4, 10);
+            Passenger pas4 = new Passenger(4, 5, 9, 30);
+            Passenger pas5 = new Passenger(5, 2, 10, 35);
+            Passenger pas6 = new Passenger(6, 5, 10, 40);
+            Passenger pas7 = new Passenger(7, 4, 1, 40);
+            Passenger pas8 = new Passenger(8, 10, 2, 52);
+
+            simulation.elevator.peopleInLift = new List<Passenger>() { pas1, pas2 };
+            simulation.waitingPassengers = new List<Passenger>() { pas3, pas4, pas5 };
+            simulation.remainingPassengers = new List<Passenger>() { pas6, pas7, pas8 };
+
+            simulation.elevator.dropOffPassengers();
+            simulation.movingFromWaitingPassengers();
+            simulation.movingFromRemainingPassengers();
+
+            var expectedPeopleInLift = new List<Passenger>() { pas2, pas4, pas6 };
+            var expectedWaitingPassengers = new List<Passenger>() { pas3, pas5, pas7 };
+            var expectedRemainingPassengers = new List<Passenger>() { pas8 };
+
+            CollectionAssert.AreEquivalent(expectedPeopleInLift, simulation.elevator.peopleInLift);
+            CollectionAssert.AreEquivalent(expectedWaitingPassengers, simulation.waitingPassengers);
+            CollectionAssert.AreEquivalent(expectedRemainingPassengers, simulation.remainingPassengers);
+        }
+
+        [TestMethod]
         public void increment_mockTest()
         {
             Simulation simulation = new Simulation(); 
             simulation.elevator.currentFloor = 4.9;
-            simulation.time = 39; 
+            simulation.time = 39;
+            simulation.elevator.Direction = Elevator.ElevatorDirection.UP;
 
             Passenger pas1 = new Passenger(1,1,5,1); 
             Passenger pas2 = new Passenger(2,2,7,4); 
