@@ -12,6 +12,8 @@ namespace SimulationNS
         {
             Simulation simulation = new Simulation(); 
 
+            int i = 0; 
+
             do 
             {
                 simulation.increment(); 
@@ -24,8 +26,10 @@ namespace SimulationNS
                 else {
                     CSVFile.WriteResults(simulation.time, simulation.elevator.peopleInLift.ConvertAll(passenger => passenger.id), simulation.elevator.currentFloor,simulation.elevator.oppositeQueue);
                 }
+                i ++; 
             }
-            while (simulation.allPassengers.Count > 0 || simulation.elevator.peopleInLift.Count > 0);
+            // while (i < 100); 
+            while (simulation.remainingPassengers.Count > 0 || simulation.elevator.peopleInLift.Count > 0);
         }
     }
 
