@@ -111,14 +111,12 @@ namespace SimulationNS
             {
                 List<Passenger> passengersToRemove = new List<Passenger>(); 
 
-                for (int i = 0; i < waitingPassengers.Count; i++) 
+                foreach (var passenger in waitingPassengers)
                 {
-                    Passenger passenger = waitingPassengers[i]; 
-
                     if (Math.Abs(passenger.atFloor - elevator.currentFloor) < 0.0001 && Math.Abs(passenger.goingToFloor - elevator.currentFloor) > 0.0001)
                     {
                         // Pick up the passengers that are not being picked up and dropped off at the same floor (e.g. passenger changed their mind)
-                        if (elevator.peopleInLift.Count < elevator.maximumCapacity) 
+                        if (elevator.peopleInLift.Count < 8) 
                         {
                             elevator.peopleInLift.Add(passenger); 
                             elevator.addFloorToQueue(passenger.goingToFloor);
@@ -127,19 +125,6 @@ namespace SimulationNS
                         
                     }
                 }
-                // foreach (var passenger in waitingPassengers)
-                // {
-                //     if (Math.Abs(passenger.atFloor - elevator.currentFloor) < 0.0001 && Math.Abs(passenger.goingToFloor - elevator.currentFloor) > 0.0001)
-                //     {
-                //         // Pick up the passengers that are not being picked up and dropped off at the same floor (e.g. passenger changed their mind)
-                //         if (elevator.peopleInLift.Count < 8) 
-                //         {
-                //             elevator.peopleInLift.Add(passenger); 
-                //             elevator.addFloorToQueue(passenger.goingToFloor);
-                //         }
-                        
-                //     }
-                // }
                 
                 // Remove the passengers waiting at the current floor from the list of waitingPassengers
                 // waitingPassengers.RemoveAll(passenger => Math.Abs(passenger.atFloor - elevator.currentFloor) < 0.0001);
