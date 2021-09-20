@@ -198,6 +198,9 @@ namespace ElevatorNS
 
         /// <summary>
         /// This function calculates the new state of the elevator after a single time step. 
+        /// (1) Adjust the position of the elevator, if the elevator is going up or down. 
+        /// (2) Remove floor from queue if the floor is in the current queue. Also, drop off any passenger that want to be on this floor. 
+        /// (3) If the current queue is empty, then change direction of the elevator. 
         /// </summary>
         public void increment (double timeStep = 1) 
         {
