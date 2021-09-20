@@ -14,7 +14,10 @@ namespace SimulationNS
 
             do 
             {
+                // This function calculates the new state of the prototype after a single time step. 
                 simulation.increment(); 
+
+                // The new state is written into the output.csv file
                 // The total floor queue will be the concatenation of the current queue and the opposite queue
                 List<int> currentQueue = new List<int>(simulation.elevator.currentQueue);
                 currentQueue.AddRange(simulation.elevator.oppositeQueue);
@@ -109,6 +112,7 @@ namespace SimulationNS
         {
             if (waitingPassengers.Count > 0) 
             {
+                // Save a list of passengersToRemove from waitingPassengers, as a list cannot be removed from and iterated through at the same time
                 List<Passenger> passengersToRemove = new List<Passenger>(); 
 
                 foreach (var passenger in waitingPassengers)
