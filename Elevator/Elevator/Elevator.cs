@@ -100,7 +100,12 @@ namespace ElevatorNS
         }
 
         /// <summary>
-        /// This function add a floor to the floor queue
+        /// This function add a floor to the floor queue. The floor queue consists of 2 parts:
+        /// - a currentQueue (floors in the current direction of travel) 
+        /// - an oppositeQueue (floors in the opposite direction of travel).
+        /// The queue for the up direction would be sorted in ascending order. 
+        /// The queue for the down direction would be sorted in descending order. 
+        /// Also, if the elevator is currently stationary and a floor is added, the elevator should start moving toward the added floor. 
         /// </summary> 
         public void addFloorToQueue (int floor) {
             // Only do something if the given floor is not the current floor and not in the queue
@@ -150,6 +155,7 @@ namespace ElevatorNS
 
         /// <summary>
         /// This function changes the direction of the elevator when the current queue is empty. 
+        /// If the opposite queue is also empty, the elevator should be stationary.
         /// </summary>
         public void changeDirection() 
         {

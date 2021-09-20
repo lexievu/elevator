@@ -168,7 +168,13 @@ namespace SimulationNS
         }
 
         /// <summary>
-        /// This function calculates the new state of the prototype after a single time step. 
+        /// This function calculates the new state of the prototype after a single time step. Steps (2) - (4) is contained within elevator.increment().
+        /// (1) Increase the current time by the time step. 
+        /// (2) Adjust the position of the elevator, if the elevator is going up or down. 
+        /// (3) Remove floor from queue if the floor is in the current queue. Also, drop off any passenger that want to be on this floor. 
+        /// (4) If the current queue is empty, then change direction of the elevator. 
+        /// (5) Move passengers from waiting passengers to elevator.peopleInLift, if there are passengers waiting at the elevator's current floor. 
+        /// (6) Move passengers from remaining passengers to elevator.peopleInLift, if there are passengers waiting at the elevator's current floor and current time >= passengers start waiting time. If there are other passengers waiting at the elevator's current floor and current time >= passengers start waiting time, add them to the waiting passengers list. 
         /// </summary>
         public void increment(int timeStep = 1) 
         {
